@@ -15,6 +15,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # openssh-server - for ssh support into cluster
 RUN apt-get update \
   && apt-get install --yes \
+    locales \
     openjdk-8-jdk \
     bash \
     iproute2 \
@@ -23,6 +24,14 @@ RUN apt-get update \
     sudo \
     fuse \
     openssh-server
+
+# default locale
+RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
+  && locale-gen en_US.utf8 \
+  && /usr/sbin/update-locale LANG=en_US.UTF-8
+
+ENV LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8
 
 # cleanup
 RUN apt-get autoremove -y \
