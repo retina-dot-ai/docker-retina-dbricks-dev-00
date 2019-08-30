@@ -23,7 +23,8 @@ RUN apt-get update \
     procps \
     sudo \
     fuse \
-    openssh-server
+    openssh-server \
+  && /var/lib/dpkg/info/ca-certificates-java.postinst configure
 
 # default locale
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
@@ -32,6 +33,10 @@ RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
 
 ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.UTF-8
+
+# Warning: the created user has root permissions inside the container
+# Warning: you still need to start the ssh process with `sudo service ssh start`
+RUN useradd --create-home --shell /bin/bash --groups sudo ubuntu
 
 # cleanup
 RUN apt-get autoremove -y \
