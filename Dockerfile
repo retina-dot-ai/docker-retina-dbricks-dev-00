@@ -38,6 +38,8 @@ ENV LANG=en_US.UTF-8
 # Warning: you still need to start the ssh process with `sudo service ssh start`
 RUN useradd --create-home --shell /bin/bash --groups sudo ubuntu
 
+EXPOSE 22
+
 # cleanup
 RUN apt-get autoremove -y \
   && apt-get clean \
